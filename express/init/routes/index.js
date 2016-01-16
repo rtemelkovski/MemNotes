@@ -15,8 +15,9 @@ router.get('/', function(req, res, next) {
 /* POST LOGIN */
 router.post('/login', function(req, res, next){
 	var usr = req.body.usr;
-	var pass = 
+	var pass = req.body.pas;
 	res.send(usr);
+	res.send(pas);
 });
 
 /* GET LOGIN */
