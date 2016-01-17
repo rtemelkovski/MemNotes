@@ -1,23 +1,34 @@
 
 var express = require('express');
 var gcm = require('node-gcm');
+var later = require('later');
+var dayofweek = require('day-of-week').get;
 var router = express.Router();
 
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://PavleArezina:Kronoros1@ds047365.mongolab.com:47365/deltahacks');
 var db = mongoose.connection;
+var sendmessage;
+var sendtoken;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function (callback) {
     console.log('connected');
 });
 var globalCount= 0;
 var globalCaregiverID=0;
+var globalCode = 0;
+var MessagesSchema = new mongoose.Schema({
+	code : String,
+	mess : String,
+	gcmToken: String
+});
 var CaregiverSchema = new mongoose.Schema({
 	user : String,
 	pass : String,
 	idd : String
 });
+
 var PatientSchema = new mongoose.Schema({
 	gcmToken: String,
 	caregiverID: String,
@@ -34,6 +45,7 @@ var PatientSchema = new mongoose.Schema({
     notes: String,
     isConfirmed: Boolean
 });
+var Messages = mongoose.model('Messages', MessagesSchema);
 var Caretaker = mongoose.model('Caretakers', CaregiverSchema);
 var Patientz = mongoose.model('Patients', PatientSchema);
 
@@ -154,9 +166,10 @@ router.post('/newPatient', function(req, res, next){
     	isConfirmed: false });
 	newPatient1.save(function (err, newPatient1) {
   		if (err) return console.error(err);
+  		res.send(newPatient1);
 	});
 	//Create new document in mongo database, store gcm and name
-	res.send({response: "OKAY"});
+	
 });
 /* GET NEWPATIENTS */
 router.get('/patientsVerify', function(req, res, next){
@@ -191,24 +204,68 @@ router.post('/aCheck', function(req, res, next){
 });
 /* POST NOTIFICATION */
 router.post('/notification', function(req, res, next){
-	var messaging = req.body.message;
-	var token = req.body.gcmToken;
-	
-	var message = new gcm.Message();
-	var sender = new gcm.Sender('AIzaSyCslqmnFUXjXfsjubtneeNXV107CLD9rYI');
-	var registrationIds = [];
- 
-	message.addData('title','MemNote');
-	message.addData('message', messaging);
-	message.addData('msgcnt','1');
-	message.delayWhileIdle = true;
-	message.timeToLive = 3;
+	var sendmessage = req.body.message;
+	var sendtoken = req.body.gcmToken;
+	var frequency = req.body.freq;
+	console.log(frequency);
+	var time = req.body.t.split(":");
+	time[2] = "00"
+	console.log(time[0]);
 
-	registrationIds.push(token);
+	var time = time.join(":")
+	console.log(time);
+	var date = req.body.d.split('-');
+	console.log(date);
 
-	sender.send(message, registrationIds, 4, function (err, result) {
+	var newMessage = new Messages({
+		code : globalCode,
+		mess : messaging,
+		gcmToken : token
 	});
-	res.send({response: "OKAY"});
-});
+	globalCode++;
+	newMessage.save(function (err, newPatient) {
+  		if (err) return console.error(err);
+	});
+	var next;
+	later.date.UTC();
+	if(frequency == "Once") 
+	{
+		var recurschedule = later.parse.recur().on(time).time();
+		next = later.schedule(recurschedule).next(1);
+	}
+	else if(frequency == "Daily")
+	{
+		var recurschedule = later.parse.recur().on(time).time();
+		next = later.schedule(recurschedule).next(30);
+	}
+	else if(frequency == "Weekly")
+	{ 	
+		var weekday = dayofweek(new Date(date[0],date[1],date[2]), 'America/Los_Angeles');
+		console.log(weekday)
+
+		var recurschedule = later.parse.recur().on(time).time().on(weekday).dayOfWeek();
+		next = later.schedule(recurschedule).next(30);
+	}
+	else if(frequency == "Monthly")
+	{
+		var recurschedule = later.parse.recur().on(time).time().on(date[2]).dayOfMonth();
+		next = later.schedule(recurschedule).next(30);
+	}
+	else if(frequency == "Yearly")
+	{
+		var recurschedule = later.parse.recur().on(time).time().on(date[1]).month().on(date[2]).dayOfMonth();
+		next = later.schedule(recurschedule).next(30);
+
+	}
+
+	later.setInterval(function() { test(5); }, sched);
+
+  	function test(val) {
+    	console.log(new Date());
+    	console.log(val);
+    	t.clear();
+  	}
+  });
+
 
 module.exports = router;
