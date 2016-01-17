@@ -6,12 +6,17 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://PavleArezina:Kronoros1@ds047365.mongolab.com:47365/deltahacks');
 var db = mongoose.connection;
-var ObjectId = require('mongoose').Types.ObjectId; 
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function (callback) {
     console.log('connected');
 });
-
+var globalCount= 0;
+var globalCaregiverID=0;
+var CaregiverSchema = new mongoose.Schema({
+	user : String,
+	pass : String,
+	idd : String
+});
 var PatientSchema = new mongoose.Schema({
 	gcmToken: String,
 	caregiverID: String,
@@ -28,16 +33,25 @@ var PatientSchema = new mongoose.Schema({
     notes: String,
     isConfirmed: Boolean
 });
-
+var Caretaker = mongoose.model('Caretakers', CaregiverSchema);
 var Patientz = mongoose.model('Patients', PatientSchema);
 
 
 //MONGO DATABASE NEW PATIENTS NOT VERIFIED WHILE VERIFIED PATIENTS SHOWN (NEEDS TO A BOOLEAN VALUE)
 
+var newCaretaker = new Caretaker({
+	user : "Teo",
+	pass : "password",
+	idd : globalCount
+});
+newCaretaker.save(function (err, newPatient) {
+  if (err) return console.error(err);
+});
+globalCount++;
 
 var newPatient = new Patientz({ 
 	gcmToken: "yolo",
-	caregiverID: "Roberto",
+	caregiverID: 0,
     firstname: "Teo",
     lastname: "Focker",
     number: "34543534",
@@ -62,23 +76,29 @@ router.get('/', function(req, res, next) {
 /* POST LOGIN */
 router.post('/login', function(req, res, next){
 	var usr = req.body.usr;
-	var pass = req.body.pas;
-	console.log(usr);
-	console.log(pass);
-	//check if the username and password are in the database
-	res.send("TRUE");
-	//append username and password together something
+	var password = req.body.pas;
+	Caretaker.find({user : usr, pass : password},
+        function (err, verify) {
+        	if (!verify[0])
+        	{
+        		res.send("FALSE");
+        	}
+        	else
+        	{
+        		globalCaregiverID=verify[0].idd;
+        		res.send("TRUE");
+        	}
+	});
 });
-
+///////////////////////////////////////////IF WE HAVE TIME DO REGISTER CARETAKERS
 /* GET PATIENTS */ 
 router.get('/getPatients', function(req, res, next){
-	Patientz.find({},
+	Patientz.find({caregiverID : globalCaregiverID},
         function (err, patients) {
         	var x = new Array(patients.length);
 			for (var i = 0; i < patients.length; i++) {
   				x[i] = new Array(7);
-			}
-			console.log(x.length);	
+			}	
             for (i = 0; i < patients.length; i++) { 
     			x[i][0]=patients[i]._id;
     			x[i][1]=patients[i].firstname;
