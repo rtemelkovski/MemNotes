@@ -1,7 +1,6 @@
 <h1>Your current patients</h1>
 <div class="table-responsive">
 	<table class="table table-hover">
-    <pre><code>{{people | json}}</code></pre>
 		<thead>
 			<tr>
 				<th>First Name</th>
@@ -52,11 +51,10 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                          <h4 class="modal-title" id="myModalLabel">New Notification</h4>
                         </div>
                         <div class="modal-body">
                           <form name="patientForm[$index]">
-                          <pre><code>{{dateform[$index]}}</code></pre>
                           <h5>Message</h5>
                           <textarea type="text" ng-model="dateform[$index].message" class="form-control" placeholder="Enter message" style="max-width: 100%" required></textarea>
                           <br>
@@ -77,6 +75,18 @@
                               <option>10</option>
                               <option>11</option>
                               <option>12</option>
+                              <option>13</option>
+                              <option>14</option>
+                              <option>15</option>
+                              <option>16</option>
+                              <option>17</option>
+                              <option>18</option>
+                              <option>19</option>
+                              <option>20</option>
+                              <option>21</option>
+                              <option>22</option>
+                              <option>23</option>
+                              <option>00</option>
                             </select>
                             <select ng-model="dateform[$index].minute" class="form-control col-sm-3" required>
                               <option>00</option>

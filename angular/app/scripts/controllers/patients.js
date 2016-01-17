@@ -57,6 +57,9 @@ angular.module('deltahacksApp')
       console.log(time);
       console.log(obj.date);
       console.log(obj.message);
+      obj.hour = parseInt(obj.hour) + 5;
+      time = obj.hour + ':'+ obj.minute;
+      console.log(time);
       $http({
         'method' : 'POST',
         'url' : 'http://172.17.148.27:3000/notification',
