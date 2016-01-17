@@ -80,7 +80,7 @@ router.get('/getPatients', function(req, res, next){
 			}
 			console.log(x.length);	
             for (i = 0; i < patients.length; i++) { 
-    			x[i][0]=patients[i]._id;////////////////////////////////////////GET PROPER ID
+    			x[i][0]=patients[i]._id;
     			x[i][1]=patients[i].firstname;
     			x[i][2]=patients[i].lastname;
     			x[i][3]=patients[i].room;
@@ -157,6 +157,18 @@ router.post('/verifyPatient', function(req, res, next){
 	//Store important info to the user
 })
 
+/* POST ACHECK */
+router.post('/aCheck', function(req, res, next){
+	var firstname1 = req.body.first_name;
+	console.log(firstname1);
+	var lastname1 = req.body.last_name;
+	var gcmToken1 = req.body.token;
+	Patientz.find({firstname : firstname1, lastname : lastname1, gcmToken : gcmToken1},
+        function (err, verify) {
+        	console.log(JSON.stringify(verify[0]));
+        	res.send(verify[0]);
+	});
+});
 /* POST NOTIFICATION */
 router.post('/notification', function(req, res, next){
 	//gcm token used here
