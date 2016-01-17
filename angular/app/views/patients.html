@@ -29,7 +29,7 @@
   								<p><b>Phone Number: </b>{{ people[$index][7].phone }}</p>
   							</div>
   							<div class="col-sm-6">
-  								<p><b>Emergency Name: </b>{{ people[$index][7].ename }}</p>
+  								<p><b>Emergency Name: </b>{{ people[$index][7].enumber }}</p>
   							</div>
               </div>
               <div class="row" style="background-color:#DCDCDC;">
@@ -37,7 +37,7 @@
   								<p><b>Gender: </b>{{ people[$index][7].gender }}</p>
   							</div>
                 <div class="col-sm-6">
-                  <p><b>Emergency Phone Number: </b>{{ people[$index][7].enumber }}</p>
+                  <p><b>Emergency Phone Number: </b>{{ people[$index][7].ename }}</p>
                 </div>
   						</div>
   						<div class="row" style="background-color:#DCDCDC; padding-bottom: 15px">
@@ -55,6 +55,7 @@
                         </div>
                         <div class="modal-body">
                           <form name="patientForm[$index]">
+
                           <h5>Message</h5>
                           <textarea type="text" ng-model="dateform[$index].message" class="form-control" placeholder="Enter message" style="max-width: 100%" required></textarea>
                           <br>
