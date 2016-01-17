@@ -21,7 +21,11 @@ var globalCode = 0;
 var MessagesSchema = new mongoose.Schema({
 	code : String,
 	mess : String,
-	gcmToken: String
+	gcmToken: String,
+	date : String,
+	time : String,
+	first_name : String,
+	last_name : String
 });
 var CaregiverSchema = new mongoose.Schema({
 	user : String,
@@ -71,7 +75,7 @@ newCaretaker.save(function (err, newPatient) {
 });
 
 
-var newPatient = new Patientz({ 
+/*var newPatient = new Patientz({ 
 	gcmToken: "yolo",
 	caregiverID: 0,
     firstname: "YOLLLLO",
@@ -88,7 +92,7 @@ var newPatient = new Patientz({
     isConfirmed: true });
 newPatient.save(function (err, newPatient) {
   if (err) return console.error(err);
-});
+});*/
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -202,69 +206,54 @@ router.post('/aCheck', function(req, res, next){
         	res.send(verify[0]);
 	});
 });
+
+/* POST USER NOTIFICATIONS */
+router.post('/pullNotifications', function(req, res, next){
+	var sendtoken = req.body.gcmToken;
+	var firstname1 = req.body.firstname;
+	var lastname1 = req.body.lastname;
+	var result;
+	var localCode;
+	Messages.find({first_name : firstname1, last_name : lastname1, gcmToken : sendtoken},
+        function (err, verify) {
+        	//verify.remove();
+        	localCode = verify[0].code;
+        	result = verify[0];
+        	console.log(result);
+        	Messages.find({ first_name : firstname1, last_name : lastname1, gcmToken : sendtoken, code : localCode }).remove().exec();
+        	res.send(result);
+        	
+	});
+
+	
+	//res.send(result);
+
+
+});
 /* POST NOTIFICATION */
 router.post('/notification', function(req, res, next){
 	var sendmessage = req.body.message;
 	var sendtoken = req.body.gcmToken;
-	var frequency = req.body.freq;
-	console.log(frequency);
-	var time = req.body.t.split(":");
-	time[2] = "00"
-	console.log(time[0]);
-
-	var time = time.join(":")
-	console.log(time);
-	var date = req.body.d.split('-');
-	console.log(date);
-
-	var newMessage = new Messages({
+	var date = req.body.d;
+	var time = req.body.t;
+	var firstname1 = req.body.firstname;
+	var lastname1= req.body.lastname;
+	var newMessages = new Messages({
+		mess : sendmessage,
 		code : globalCode,
-		mess : messaging,
-		gcmToken : token
+		gcmToken: sendtoken,
+		title: "MemNote",
+		date : date,
+		time : time,
+		first_name : firstname1,
+		last_name : lastname1
 	});
 	globalCode++;
-	newMessage.save(function (err, newPatient) {
+	newMessages.save(function (err, newPatient) {
   		if (err) return console.error(err);
 	});
-	var next;
-	later.date.UTC();
-	if(frequency == "Once") 
-	{
-		var recurschedule = later.parse.recur().on(time).time();
-		next = later.schedule(recurschedule).next(1);
-	}
-	else if(frequency == "Daily")
-	{
-		var recurschedule = later.parse.recur().on(time).time();
-		next = later.schedule(recurschedule).next(30);
-	}
-	else if(frequency == "Weekly")
-	{ 	
-		var weekday = dayofweek(new Date(date[0],date[1],date[2]), 'America/Los_Angeles');
-		console.log(weekday)
+	res.send("OKAY");
 
-		var recurschedule = later.parse.recur().on(time).time().on(weekday).dayOfWeek();
-		next = later.schedule(recurschedule).next(30);
-	}
-	else if(frequency == "Monthly")
-	{
-		var recurschedule = later.parse.recur().on(time).time().on(date[2]).dayOfMonth();
-		next = later.schedule(recurschedule).next(30);
-	}
-	else if(frequency == "Yearly")
-	{
-		var recurschedule = later.parse.recur().on(time).time().on(date[1]).month().on(date[2]).dayOfMonth();
-		next = later.schedule(recurschedule).next(30);
-
-	}
-
-	later.setInterval(function() { test(5); }, sched);
-
-  	function test(val) {
-    	console.log(new Date());
-    	console.log(val);
-    	t.clear();
-  	}
   });
 
 
