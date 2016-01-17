@@ -48,21 +48,30 @@ newCaretaker.save(function (err, newPatient) {
   if (err) return console.error(err);
 });
 globalCount++;
+var newCaretaker = new Caretaker({
+	user : "Pavle",
+	pass : "password",
+	idd : globalCount
+});
+newCaretaker.save(function (err, newPatient) {
+  if (err) return console.error(err);
+});
+
 
 var newPatient = new Patientz({ 
 	gcmToken: "yolo",
 	caregiverID: 0,
-    firstname: "Teo",
-    lastname: "Focker",
-    number: "34543534",
-    address: "1280 Main",
-    ename: "Roberto",
-    enumber: "Whipped",
-    gender: "Questioning",
-    room: "666",
-    allergies: "Everything",
-    meds: "Heroin",
-    notes: "Watch 24/7",
+    firstname: "YOLLLLO",
+    lastname: "HEHEHEHEH",
+    number: "111111111",
+    address: "1280 ",
+    ename: "yo",
+    enumber: "yo",
+    gender: "Male",
+    room: "111",
+    allergies: "FIRE A GUN",
+    meds: "MATE",
+    notes: "NIGHT WAS WARM",
     isConfirmed: true });
 newPatient.save(function (err, newPatient) {
   if (err) return console.error(err);
@@ -114,7 +123,6 @@ router.get('/getPatients', function(req, res, next){
 
 /* POST PATIENT */
 router.post('/patient', function(req, res, next){
-	//from bson.objectid import ObjectId
 	var patient = req.body.pid;
 	console.log(patient);
 	Patientz.findById(patient, function (err, id) {
@@ -152,7 +160,7 @@ router.post('/newPatient', function(req, res, next){
 });
 /* GET NEWPATIENTS */
 router.get('/patientsVerify', function(req, res, next){
-	Patientz.find({isConfirmed : false},
+	Patientz.find({isConfirmed : false, caregiverID : globalCaregiverID},
         function (err, verify) {
         	res.send(verify);
 	});
@@ -191,6 +199,25 @@ router.post('/aCheck', function(req, res, next){
 });
 /* POST NOTIFICATION */
 router.post('/notification', function(req, res, next){
+	var gcm = require('node-gcm');
+	var message = new gcm.Message({
+    	collapseKey: 'demo',
+    	priority: 'high',
+    	contentAvailable: true,
+    	delayWhileIdle: true,
+    	timeToLive: 3,
+    	restrictedPackageName: "com.example.roberto.deltahacksandroidapp",
+    	dryRun: true,
+    	data: {
+        	key1: 'message1',
+        	key2: 'message2'
+    	},
+    	notification: {
+        	title: "NOTIFICATION",
+        	icon: "ic_launcher",
+        	body: "This is a notification that will be displayed ASAP."
+    	}
+	});
 	//gcm token used here
 	//send a string as a json object
 	//
