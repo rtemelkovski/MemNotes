@@ -1,5 +1,6 @@
 
 var express = require('express');
+var gcm = require('node-gcm');
 var router = express.Router();
 
 var bodyParser = require('body-parser');
@@ -102,7 +103,7 @@ router.post('/login', function(req, res, next){
 ///////////////////////////////////////////IF WE HAVE TIME DO REGISTER CARETAKERS
 /* GET PATIENTS */ 
 router.get('/getPatients', function(req, res, next){
-	Patientz.find({caregiverID : globalCaregiverID},
+	Patientz.find({caregiverID : globalCaregiverID, isConfirmed : true},
         function (err, patients) {
         	var x = new Array(patients.length);
 			for (var i = 0; i < patients.length; i++) {
@@ -124,7 +125,6 @@ router.get('/getPatients', function(req, res, next){
 /* POST PATIENT */
 router.post('/patient', function(req, res, next){
 	var patient = req.body.pid;
-	console.log(patient);
 	Patientz.findById(patient, function (err, id) {
 		res.send(id);
 	});
@@ -167,22 +167,15 @@ router.get('/patientsVerify', function(req, res, next){
 })
 /* POST VERIFYPATIENT */
 router.post('/verifyPatient', function(req, res, next){
-
 	var room1 = req.body.roomnumber;
 	var allergies1 = req.body.allergy;
 	var meds1 = req.body.medication;
 	var notes1 = req.body.notes;
-	db.patients.update({})
-	var newPatient = new Patientz({ 
-    room: room1,
-    allergies: allergies1,
-    meds: meds1,
-    notes: notes1,
-    isConfirmed: true });
-	newPatient.save(function (err, newPatient) {
-  		if (err) return console.error(err);
+	var patient = req.body.pid;
+	Patientz.findByIdAndUpdate(patient, { $set: { allergies : allergies1, meds : meds1, room : room1, notes : notes1, isConfirmed : true }}, function (err, tank) {
+  		if (err) return handleError(err);
+  		res.send(tank);
 	});
-	//Store important info to the user
 })
 
 /* POST ACHECK */
@@ -193,34 +186,29 @@ router.post('/aCheck', function(req, res, next){
 	var gcmToken1 = req.body.token;
 	Patientz.find({firstname : firstname1, lastname : lastname1, gcmToken : gcmToken1},
         function (err, verify) {
-        	console.log(JSON.stringify(verify[0]));
         	res.send(verify[0]);
 	});
 });
 /* POST NOTIFICATION */
 router.post('/notification', function(req, res, next){
-	var gcm = require('node-gcm');
-	var message = new gcm.Message({
-    	collapseKey: 'demo',
-    	priority: 'high',
-    	contentAvailable: true,
-    	delayWhileIdle: true,
-    	timeToLive: 3,
-    	restrictedPackageName: "com.example.roberto.deltahacksandroidapp",
-    	dryRun: true,
-    	data: {
-        	key1: 'message1',
-        	key2: 'message2'
-    	},
-    	notification: {
-        	title: "NOTIFICATION",
-        	icon: "ic_launcher",
-        	body: "This is a notification that will be displayed ASAP."
-    	}
+	var messaging = req.body.message;
+	var token = req.body.gcmToken;
+	
+	var message = new gcm.Message();
+	var sender = new gcm.Sender('AIzaSyCslqmnFUXjXfsjubtneeNXV107CLD9rYI');
+	var registrationIds = [];
+ 
+	message.addData('title','MemNote');
+	message.addData('message', messaging);
+	message.addData('msgcnt','1');
+	message.delayWhileIdle = true;
+	message.timeToLive = 3;
+
+	registrationIds.push(token);
+
+	sender.send(message, registrationIds, 4, function (err, result) {
 	});
-	//gcm token used here
-	//send a string as a json object
-	//
+	res.send({response: "OKAY"});
 });
 
 module.exports = router;
