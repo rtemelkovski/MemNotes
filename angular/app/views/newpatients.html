@@ -1,2 +1,59 @@
 <h1>Patients that need confirmation</h1>
-<p>New Patients</p>
+<h1>Your current patients</h1>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+<!-- 				<th>Room #</th>
+				<th>Allergies</th>
+				<th>Medication</th>
+				<th>Notes</th> -->
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat-start="x in people track by $index" ng-click="info(x)" data-toggle="collapse" data-target="#accordion{{$index}}" class="clickable">
+				<td>{{ x.firstname }}</td>
+				<td>{{ x.lastname }}</td>
+			</tr>
+			<tr ng-repeat-end="">
+				<td colspan="12">
+					<div id="accordion{{$index}}" class="collapse accordion-body">
+						<div class="row" style="background-color:#DCDCDC;">
+							<div class="col-md-12">
+								<p><b>Room #: </b><input type="text" name="input" ng-model="room" required ng-trim="false"></p><br>
+							</div>
+						</div>
+						<div class="row" style="background-color:#DCDCDC;">
+							<div class-"col-md-12" style="padding-left:2%;">
+								<p><b>Allergies: </b><input type="text" name="input" ng-model="allergies" required ng-trim="false"></p><br>
+							</div>
+						</div>
+						<div class="row" style="background-color:#DCDCDC;">
+							<div class="col-md-12">
+								<p><b>Medication: </b><input type="text" name="input" ng-model="medication" required ng-trim="false"></p><br>
+							</div>
+						</div>
+						<div class="row" style="background-color:#DCDCDC;">
+							<div class="col-md-6">
+								<p><b>Notes: </b><input type="text" name="input" ng-model="notes" required ng-trim="false"></p><br>
+							</div>
+							<div class="col-md-6">
+								<p><a class="btn btn-lg" ng-click="verify(room, allergies, medication, notes, $index)">Submit<span class="glyphicon"></span></a></p>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<p><a class="btn btn-lg" href="#/patients">Patients<span class="glyphicon"></span></a></p>
+	</div>
+	<div class="col-md-6">
+		<p><a class="btn btn-lg" href="#/">Sign Out<span class="glyphicon"></span></a></p>
+	</div>
+</div>

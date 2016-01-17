@@ -50,4 +50,7 @@ angular.module('deltahacksApp')
     		console.log(response);
     	});
     }
+    $scope.submit = function(index){
+      console.log("SUBMIT " + index)
+    }
   });

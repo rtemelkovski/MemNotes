@@ -16,8 +16,32 @@ angular.module('deltahacksApp')
   		'header' : 'application/json'
   	}).then(function succesfulCallback(response){
   		console.log(response);
-  		people = response.data;
+  		$scope.people = response.data;
   	}, function errorCallback(response){
   		console.log(response);
   	});
+  	$scope.verify = function(room, allergies, medication, notes, $index){
+  		console.log(room);
+  		console.log(allergies);
+  		console.log(medication);
+  		console.log(notes);
+  		console.log($index);
+  		console.log($scope.people[$index]);
+  		$http({
+  			'method' : 'POST',
+  			'url' : 'http://172.17.148.27:3000/verifyPatient',
+    		'header' : 'application/json',
+    		'data' : {
+    			'roomnumber' : room,
+    			'allergy' : allergies,
+    			'medication' : medication,
+    			'notes' : notes,
+    			'pid' : $scope.people[$index]._id
+    		}
+  		}).then(function succesfulCallback(response) {
+  			console.log(response);
+ 		}, function errorCallback(response) {
+ 			console.log(response);
+ 		});
+  	}
   });

@@ -25,27 +25,27 @@
 					<div id="accordion{{$index}}" class="collapse accordion-body">
             <div class="container-fluid">
   						<div class="row" style="background-color:#DCDCDC; padding-top: 15px">
-  							<div class="col-md-6">
+  							<div class="col-sm-6">
   								<p><b>Phone Number: </b>{{ people[$index][7].phone }}</p>
   							</div>
-  							<div class="col-md-6">
+  							<div class="col-sm-6">
   								<p><b>Emergency Name: </b>{{ people[$index][7].ename }}</p>
   							</div>
               </div>
               <div class="row" style="background-color:#DCDCDC;">
-  							<div class="col-md-6">
+  							<div class="col-sm-6">
   								<p><b>Gender: </b>{{ people[$index][7].gender }}</p>
   							</div>
-                <div class="col-md-6">
+                <div class="col-sm-6">
                   <p><b>Emergency Phone Number: </b>{{ people[$index][7].enumber }}</p>
                 </div>
   						</div>
   						<div class="row" style="background-color:#DCDCDC; padding-bottom: 15px">
-  							<div class="col-md-6">
+  							<div class="col-sm-6">
   								<p><b>Address: </b>{{ people[$index][7].address }}</p>
   							</div>
-                <div class="col-md-6">
-                  <button class="btn btn-primary btn-sm">BUTTON</button>
+                <div class="col-sm-6">
+                  <button class="btn btn-primary btn-sm" ng-click="submit($index)">Submit</button>
                 </div>
   						</div>
             </div>
