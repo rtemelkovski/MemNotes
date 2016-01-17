@@ -1,0 +1,58 @@
+<h1>Your current patients</h1>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Room #</th>
+				<th>Allergies</th>
+				<th>Medication</th>
+				<th>Notes</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat-start="x in people track by $index" ng-click="info(x)" data-toggle="collapse" data-target="#accordion{{$index}}" class="clickable">
+				<td>{{ x[1] }}</td>
+				<td>{{ x[2] }}</td>
+				<td>{{ x[3] }}</td>
+				<td>{{ x[4] }}</td>
+				<td>{{ x[5] }}</td>
+				<td>{{ x[6] }}</td>
+			</tr>
+			<tr ng-repeat-end="">
+				<td colspan="12">
+					<div id="accordion{{$index}}" class="collapse accordion-body">
+						<div class="row" style="background-color:#DCDCDC;">
+							<div class="col-md-4">
+								<p><b>Phone Number: </b>{{ phone }}</p>
+							</div>
+							<div class-"col-md-4">
+								<p><b>Emergency Name: </b>{{ ename }}</p>
+							</div>
+							<div class="col-md-4">
+								<p><b>Gender: </b>{{ gender }}</p>
+							</div>
+						</div>
+						<div class="row" style="background-color:#DCDCDC;">
+							<div class="col-md-4">
+								<p><b>Address: </b>{{ address }}</p>
+							</div>
+							<div class="col-md-4">
+								<p><b>Emergency Phone Number: </b>{{ enumber }}</p>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<p><a class="btn btn-lg" href="#/newpatients">New Patients<span class="glyphicon"></span></a></p>
+	</div>
+	<div class="col-md-6">
+		<p><a class="btn btn-lg" href="#/">Sign Out<span class="glyphicon"></span></a></p>
+	</div>
+</div>

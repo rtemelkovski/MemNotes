@@ -9,31 +9,41 @@
  */
 angular.module('deltahacksApp')
   .controller('PatientsCtrl', function ($scope, $http) {
-  	$scope.people = {};
-  	$scope.isCollapsed = false;
+  	$scope.people = [];
+  	$scope.phone = "";
+  	$scope.gender = "";
+  	$scope.address = "";
+  	$scope.ename = "";
+  	$scope.enumber = "";
   	$http({
     			'method': 'GET',
     			'url' : 'http://172.17.148.27:3000/getPatients',
     			'header' : 'application/json'
     		}).then(function successCallback(response) {
-    			console.log(response);
-    			$scope.people = response.data;
+    			for (var i = 0; i < response.data.length; i++){
+    				$scope.people.push(response.data[i]);
+    			}
 
     		}, function errorCallback(response) {
     			console.log(response);
     		});
-    $scope.info = function(person, $index){
-    	$scope.activePosition = $scope.activePosition == $index ? -1 : $index;
+    $scope.info = function(person){
+	    console.log(person[0]);
     	$http({
     		'method' : 'POST',
     		'url' : 'http://172.17.148.27:3000/patient',
     		'header' : 'application/json',
     		'data' : {
-    			pid : person.id
+    			pid : person[0]
     		}
     	}).then(function successCallback(response) {
     		console.log(response);
-    		person = response.data;
+    		//person = response.data;
+    		$scope.gender = response.data.gender;
+    		$scope.address = response.data.address;
+    		$scope.ename = response.data.ename;
+    		$scope.enumber = response.data.enumber;
+    		$scope.phone = response.data.number;
 
     	}, function errorCallback(response){
     		console.log(response);
