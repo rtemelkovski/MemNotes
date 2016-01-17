@@ -50,14 +50,19 @@ angular.module('deltahacksApp')
     		console.log(response);
     	});
     }
-    $scope.submit = function(obj, index){
+    $scope.submit = function(obj, index, person){
       var time = [obj.hour, obj.minute, obj.ampm].join(":")
+      console.log($scope.people[index][1]);
+      console.log(obj.frequency);
+      console.log(time);
+      console.log(obj.date);
+      console.log(obj.message);
       $http({
         'method' : 'POST',
-        'url' : 'http://172.17.148.27/notification',
+        'url' : 'http://172.17.148.27:3000/notification',
         'header' : 'application/json',
         'data': {
-          'gcmToken' : '', //people[index].gcmtoken
+          'gcmToken' : $scope.people[index][1], //people[index].gcmtoken
           'freq' : obj.frequency, //frequency
           't' : time, //time
           'd': obj.date, //date
