@@ -50,7 +50,26 @@ angular.module('deltahacksApp')
     		console.log(response);
     	});
     }
-    $scope.submit = function(index){
+    $scope.submit = function(index, date, message, frequency){
+      $http({
+        'method' : 'POST',
+        'url' : 'http://172.17.148.27/notification',
+        'header' : 'application/json',
+        'data': {
+          'gcmToken' : '', //people[index].gcmtoken
+          'freq' : '', //frequency
+          't' : '', //time
+          'd': '', //date
+          'message' : '' //message
+        }
+      }).then(function successCallback(response) {
+        console.log(response);
+        if (response.data == "OK"){
+          console.log(response.data);
+        }
+      }, function errorCallback(response) {
+        console.log(response);
+      });
       console.log("SUBMIT " + index)
     }
   });
