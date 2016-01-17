@@ -40,6 +40,20 @@ angular.module('deltahacksApp')
     		}
   		}).then(function succesfulCallback(response) {
   			console.log(response);
+  			$scope.room = "";
+  			$scope.allergies = "";
+  			$scope.medication = "";
+  			$scope.notes = "";
+  			  	$http({
+				  		'method' : 'GET',
+				  		'url' : 'http://172.17.148.27:3000/patientsVerify',
+				  		'header' : 'application/json'
+				  	}).then(function succesfulCallback(response){
+				  		console.log(response);
+				  		$scope.people = response.data;
+				  	}, function errorCallback(response){
+				  		console.log(response);
+				  	});
  		}, function errorCallback(response) {
  			console.log(response);
  		});
