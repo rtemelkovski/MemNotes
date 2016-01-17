@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat-start="x in people track by $index" ng-click="info(x)" data-toggle="collapse" data-target="#accordion{{$index}}" class="clickable">
+			<tr ng-repeat-start="x in people track by $index" ng-click="info(x, $index)" data-toggle="collapse" data-target="#accordion{{$index}}" class="clickable">
 				<td>{{ x[1] }}</td>
 				<td>{{ x[2] }}</td>
 				<td>{{ x[3] }}</td>
@@ -25,21 +25,21 @@
 					<div id="accordion{{$index}}" class="collapse accordion-body">
 						<div class="row" style="background-color:#DCDCDC;">
 							<div class="col-md-4">
-								<p><b>Phone Number: </b>{{ phone }}</p>
+								<p><b>Phone Number: </b>{{ people[$index][7].phone }}</p>
 							</div>
 							<div class-"col-md-4">
-								<p><b>Emergency Name: </b>{{ ename }}</p>
+								<p><b>Emergency Name: </b>{{ people[$index][7].ename }}</p>
 							</div>
 							<div class="col-md-4">
-								<p><b>Gender: </b>{{ gender }}</p>
+								<p><b>Gender: </b>{{ people[$index][7].gender }}</p>
 							</div>
 						</div>
 						<div class="row" style="background-color:#DCDCDC;">
 							<div class="col-md-4">
-								<p><b>Address: </b>{{ address }}</p>
+								<p><b>Address: </b>{{ people[$index][7].address }}</p>
 							</div>
 							<div class="col-md-4">
-								<p><b>Emergency Phone Number: </b>{{ enumber }}</p>
+								<p><b>Emergency Phone Number: </b>{{ people[$index][7].enumber }}</p>
 							</div>
 						</div>
 					</div>
