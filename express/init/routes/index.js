@@ -1,22 +1,38 @@
 
 var express = require('express');
+var gcm = require('node-gcm');
+var later = require('later');
+var dayofweek = require('day-of-week').get;
 var router = express.Router();
 
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://PavleArezina:Kronoros1@ds047365.mongolab.com:47365/deltahacks');
 var db = mongoose.connection;
+var sendmessage;
+var sendtoken;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function (callback) {
     console.log('connected');
 });
 var globalCount= 0;
 var globalCaregiverID=0;
+var globalCode = 0;
+var MessagesSchema = new mongoose.Schema({
+	code : String,
+	mess : String,
+	gcmToken: String,
+	date : String,
+	time : String,
+	first_name : String,
+	last_name : String
+});
 var CaregiverSchema = new mongoose.Schema({
 	user : String,
 	pass : String,
 	idd : String
 });
+
 var PatientSchema = new mongoose.Schema({
 	gcmToken: String,
 	caregiverID: String,
@@ -33,6 +49,7 @@ var PatientSchema = new mongoose.Schema({
     notes: String,
     isConfirmed: Boolean
 });
+var Messages = mongoose.model('Messages', MessagesSchema);
 var Caretaker = mongoose.model('Caretakers', CaregiverSchema);
 var Patientz = mongoose.model('Patients', PatientSchema);
 
@@ -58,7 +75,7 @@ newCaretaker.save(function (err, newPatient) {
 });
 
 
-var newPatient = new Patientz({ 
+/*var newPatient = new Patientz({ 
 	gcmToken: "yolo",
 	caregiverID: 0,
     firstname: "YOLLLLO",
@@ -75,7 +92,7 @@ var newPatient = new Patientz({
     isConfirmed: true });
 newPatient.save(function (err, newPatient) {
   if (err) return console.error(err);
-});
+});*/
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -102,7 +119,7 @@ router.post('/login', function(req, res, next){
 ///////////////////////////////////////////IF WE HAVE TIME DO REGISTER CARETAKERS
 /* GET PATIENTS */ 
 router.get('/getPatients', function(req, res, next){
-	Patientz.find({caregiverID : globalCaregiverID},
+	Patientz.find({caregiverID : globalCaregiverID, isConfirmed : true},
         function (err, patients) {
         	var x = new Array(patients.length);
 			for (var i = 0; i < patients.length; i++) {
@@ -124,7 +141,6 @@ router.get('/getPatients', function(req, res, next){
 /* POST PATIENT */
 router.post('/patient', function(req, res, next){
 	var patient = req.body.pid;
-	console.log(patient);
 	Patientz.findById(patient, function (err, id) {
 		res.send(id);
 	});
@@ -154,9 +170,10 @@ router.post('/newPatient', function(req, res, next){
     	isConfirmed: false });
 	newPatient1.save(function (err, newPatient1) {
   		if (err) return console.error(err);
+  		res.send(newPatient1);
 	});
 	//Create new document in mongo database, store gcm and name
-	res.send({response: "OKAY"});
+	
 });
 /* GET NEWPATIENTS */
 router.get('/patientsVerify', function(req, res, next){
@@ -167,22 +184,15 @@ router.get('/patientsVerify', function(req, res, next){
 })
 /* POST VERIFYPATIENT */
 router.post('/verifyPatient', function(req, res, next){
-
 	var room1 = req.body.roomnumber;
 	var allergies1 = req.body.allergy;
 	var meds1 = req.body.medication;
 	var notes1 = req.body.notes;
-	db.patients.update({})
-	var newPatient = new Patientz({ 
-    room: room1,
-    allergies: allergies1,
-    meds: meds1,
-    notes: notes1,
-    isConfirmed: true });
-	newPatient.save(function (err, newPatient) {
-  		if (err) return console.error(err);
+	var patient = req.body.pid;
+	Patientz.findByIdAndUpdate(patient, { $set: { allergies : allergies1, meds : meds1, room : room1, notes : notes1, isConfirmed : true }}, function (err, tank) {
+  		if (err) return handleError(err);
+  		res.send(tank);
 	});
-	//Store important info to the user
 })
 
 /* POST ACHECK */
@@ -193,34 +203,58 @@ router.post('/aCheck', function(req, res, next){
 	var gcmToken1 = req.body.token;
 	Patientz.find({firstname : firstname1, lastname : lastname1, gcmToken : gcmToken1},
         function (err, verify) {
-        	console.log(JSON.stringify(verify[0]));
         	res.send(verify[0]);
 	});
 });
+
+/* POST USER NOTIFICATIONS */
+router.post('/pullNotifications', function(req, res, next){
+	var sendtoken = req.body.gcmToken;
+	var firstname1 = req.body.firstname;
+	var lastname1 = req.body.lastname;
+	var result;
+	var localCode;
+	Messages.find({first_name : firstname1, last_name : lastname1, gcmToken : sendtoken},
+        function (err, verify) {
+        	//verify.remove();
+        	localCode = verify[0].code;
+        	result = verify[0];
+        	console.log(result);
+        	Messages.find({ first_name : firstname1, last_name : lastname1, gcmToken : sendtoken, code : localCode }).remove().exec();
+        	res.send(result);
+        	
+	});
+
+	
+	//res.send(result);
+
+
+});
 /* POST NOTIFICATION */
 router.post('/notification', function(req, res, next){
-	var gcm = require('node-gcm');
-	var message = new gcm.Message({
-    	collapseKey: 'demo',
-    	priority: 'high',
-    	contentAvailable: true,
-    	delayWhileIdle: true,
-    	timeToLive: 3,
-    	restrictedPackageName: "com.example.roberto.deltahacksandroidapp",
-    	dryRun: true,
-    	data: {
-        	key1: 'message1',
-        	key2: 'message2'
-    	},
-    	notification: {
-        	title: "NOTIFICATION",
-        	icon: "ic_launcher",
-        	body: "This is a notification that will be displayed ASAP."
-    	}
+	var sendmessage = req.body.message;
+	var sendtoken = req.body.gcmToken;
+	var date = req.body.d;
+	var time = req.body.t;
+	var firstname1 = req.body.firstname;
+	var lastname1= req.body.lastname;
+	var newMessages = new Messages({
+		mess : sendmessage,
+		code : globalCode,
+		gcmToken: sendtoken,
+		title: "MemNote",
+		date : date,
+		time : time,
+		first_name : firstname1,
+		last_name : lastname1
 	});
-	//gcm token used here
-	//send a string as a json object
-	//
-});
+	globalCode++;
+	newMessages.save(function (err, newPatient) {
+  		if (err) return console.error(err);
+	});
+	res.send("OKAY");
+
+  });
+
 
 module.exports = router;
