@@ -1,0 +1,232 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.roberto.deltahacksandroidapp.RegisterFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/fab_margin">
+
+        <TextView
+            android:id="@+id/RegisterFragmentTitle"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/LoginFragmentTitle"
+            style="?android:listSeparatorTextViewStyle"
+            android:paddingBottom="10dp"
+            />
+
+
+        <RadioGroup
+            android:id="@+id/RegisterGenderChoice"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checkedButton="@+id/radioMale"
+            android:paddingBottom="15dp"
+            >
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SignUpFragmentMaleButton"/>
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SignUpFragmentFemaleButton"/>
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/RegisterFirstNameTitle"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RegisterFirstNameTitle"
+            android:textStyle="bold"
+            android:paddingTop="5dp"
+
+            />
+
+        <EditText
+            android:id="@+id/RegisterFirstNameEnter"
+            android:layout_marginLeft="@dimen/Side_field_margins"
+            android:layout_marginRight="@dimen/Side_field_margins"
+            android:layout_marginEnd="@dimen/Side_field_margins"
+            android:layout_marginStart="@dimen/Side_field_margins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/RegisterLastNameTitle"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RegisterLastNameTitle"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/RegisterLastNameEnter"
+            android:layout_marginLeft="@dimen/Side_field_margins"
+            android:layout_marginRight="@dimen/Side_field_margins"
+            android:layout_marginEnd="@dimen/Side_field_margins"
+            android:layout_marginStart="@dimen/Side_field_margins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/RegisterAddressTitle"
+            android:layout_marginTop="@dimen/Button_difference"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RegisterAddressTitle"
+            android:textStyle="bold"
+            android:paddingTop="5dp"
+            />
+
+        <EditText
+            android:id="@+id/RegisterRegisterAddressEnter"
+            android:layout_marginLeft="@dimen/Side_field_margins"
+            android:layout_marginRight="@dimen/Side_field_margins"
+            android:layout_marginEnd="@dimen/Side_field_margins"
+            android:layout_marginStart="@dimen/Side_field_margins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            />
+
+        <TextView
+            android:id="@+id/RegisterPhoneNumberTitle"
+            android:layout_marginTop="@dimen/Button_difference"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RegisterPhoneNumberTitle"
+            android:textStyle="bold"
+            />
+
+        <EditText
+            android:id="@+id/RegisterPhoneNumberEnter"
+            android:layout_marginLeft="@dimen/Side_field_margins"
+            android:layout_marginRight="@dimen/Side_field_margins"
+            android:layout_marginEnd="@dimen/Side_field_margins"
+            android:layout_marginStart="@dimen/Side_field_margins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:id="@+id/RegisterEmergencyContactTitle"
+            android:layout_marginTop="@dimen/Button_difference"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RegisterEmergencyContactTitle"
+            android:paddingBottom="15dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/RegisterEmergencyContactNameTitle"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/Button_difference"
+                android:layout_gravity="start"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/RegisterEmergencyContactName"
+                />
+
+            <TextView
+                android:id="@+id/RegisterEmergencyContactNumberTitle"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/Button_difference"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/RegisterEmergencyContactNumber"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/RegisterEmergencyContactNumberEnter"
+                android:layout_marginLeft="@dimen/Button_difference"
+                android:layout_marginRight="@dimen/Button_difference"
+                android:layout_marginEnd="@dimen/Button_difference"
+                android:layout_marginStart="@dimen/Button_difference"
+                android:layout_gravity="start"
+                android:layout_weight="0.5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <EditText
+                android:id="@+id/RegisterEmergencyContactNameEnter"
+                android:layout_marginLeft="@dimen/Button_difference"
+                android:layout_marginRight="@dimen/Button_difference"
+                android:layout_marginEnd="@dimen/Button_difference"
+                android:layout_marginStart="@dimen/Button_difference"
+                android:layout_gravity="end"
+                android:layout_weight="0.5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/RegisterEmergencyCaregiverIDTitle"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RegisterEmergencyCaregiverID"
+            android:textStyle="bold"
+            android:paddingTop="5dp"
+
+            />
+
+        <EditText
+            android:id="@+id/RegisterEmergencyCaregiverIDEnter"
+            android:layout_marginLeft="@dimen/Side_field_margins"
+            android:layout_marginRight="@dimen/Side_field_margins"
+            android:layout_marginEnd="@dimen/Side_field_margins"
+            android:layout_marginStart="@dimen/Side_field_margins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+
+
+        <Button
+            android:id="@+id/SignUpFragmentButton"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_height="wrap_content"
+            android:text="@string/SignUpFragmentButton"
+            android:layout_gravity="center_horizontal"
+            />
+    </LinearLayout>
+
+</ScrollView>

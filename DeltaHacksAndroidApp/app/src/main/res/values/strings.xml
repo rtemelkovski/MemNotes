@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Memnote</string>
+    <string name="action_settings">Settings</string>
+    <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
+        send downstream messages to this app.</string>
+    <string name="registering_message">Generating InstanceID token</string>
+    <string name="token_error_message">An error occurred while either fetching the InstanceID token,
+        sending the fetched token to the server or subscribing to the PubSub topic. Please try
+        running the sample again.</string>
+    <string name="defaultSenderId">1079852731380</string>
+    <string name="gcm_Server_API_key">AIzaSyBXOVTwk7m07RcZXX0nGPU8foZyvKJvfRM</string>
+    <string name="node_server_sign_up">http://172.17.148.27:3000/newPatient</string>
+    <string name="node_server_log_in">http://172.17.148.27:3000/aCheck</string>
+    <string name="node_server_pull_events">http://172.17.148.27:3000/pullNotifications</string>
+
+    <string name="MainMoto">Mind The Note</string>
+    <string name="LoginFragmentTitle">Log In</string>
+    <string name="LoginFragmentNameTitle">Name</string>
+    <string name="LoginFragmentButton">Log in</string>
+    <string name="SignUpFragmentButton">Sign Up</string>
+    <string name="RegisterFragmentTitle">Log In</string>
+    <string name="RegisterFirstNameTitle">First Name</string>
+    <string name="RegisterLastNameTitle">Last Name</string>
+    <string name="RegisterPasswordTitle">Password</string>
+    <string name="RegisterPhoneNumberTitle">Phone Number</string>
+    <string name="RegisterAddressTitle">Address</string>
+    <string name="RegisterEmergencyContactTitle">Emergency Contact</string>
+    <string name="RegisterEmergencyContactName">Name</string>
+    <string name="RegisterEmergencyContactNumber">Phone Number</string>
+    <string name="RegisterEmergencyCaregiverID">Caregiver ID</string>
+    <string name="SignUpFragmentFemaleButton">Female</string>
+    <string name="SignUpFragmentMaleButton">Male</string>
+    <string name="Reminder_List_Entry_Title">Entry Title</string>
+    <string name="Reminder_List_Entry_Details">Entry Details</string>
+
+    <string name="Patient_fragment_address">Address: </string>
+    <string name="Patient_fragment_name">Name: </string>
+    <string name="Patient_fragment_number">Number: </string>
+    <string name="title_activity_patient">PatientActivity</string>
+    <string name="content_patient_reminders">Recent Reminders</string>
+    <string name="content_patient_info">Personal Information</string>
+
+
+</resources>
