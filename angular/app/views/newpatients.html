@@ -6,10 +6,6 @@
 			<tr>
 				<th>First Name</th>
 				<th>Last Name</th>
-<!-- 				<th>Room #</th>
-				<th>Allergies</th>
-				<th>Medication</th>
-				<th>Notes</th> -->
 			</tr>
 		</thead>
 		<tbody>
@@ -18,31 +14,31 @@
 				<td>{{ x.lastname }}</td>
 			</tr>
 			<tr ng-repeat-end="">
-				<td colspan="12">
+				<td colspan="12" style="padding: 0; border-top: none">
 					<div id="accordion{{$index}}" class="collapse accordion-body">
-						<div class="row" style="background-color:#DCDCDC;">
-							<div class="col-md-12">
-								<p><b>Room #: </b><input type="text" name="input" ng-model="room" required ng-trim="false"></p><br>
-							</div>
-						</div>
-						<div class="row" style="background-color:#DCDCDC;">
-							<div class-"col-md-12" style="padding-left:2%;">
-								<p><b>Allergies: </b><input type="text" name="input" ng-model="allergies" required ng-trim="false"></p><br>
-							</div>
-						</div>
-						<div class="row" style="background-color:#DCDCDC;">
-							<div class="col-md-12">
-								<p><b>Medication: </b><input type="text" name="input" ng-model="medication" required ng-trim="false"></p><br>
-							</div>
-						</div>
-						<div class="row" style="background-color:#DCDCDC;">
-							<div class="col-md-6">
-								<p><b>Notes: </b><input type="text" name="input" ng-model="notes" required ng-trim="false"></p><br>
-							</div>
-							<div class="col-md-6">
-								<p><a class="btn btn-lg" ng-click="verify(room, allergies, medication, notes, $index)">Submit<span class="glyphicon"></span></a></p>
-							</div>
-						</div>
+            <form class="container-fluid" name="newPatients">
+  						<div class="row" style="background-color:#DCDCDC; padding-top: 15px">
+  							<div class="col-sm-6 form-group">
+  								<p><b>Room #: </b><span style="float: right"><input class="form-control" type="text" name="input" ng-model="room" required ng-trim="false"></span></p>
+  							</div>
+                <div class="col-sm-6 form-group">
+                  <p><b>Allergies: </b><span style="float: right"><input class="form-control" type="text" name="input" ng-model="allergies" required ng-trim="false"></span></p>
+                </div>
+  						</div>
+  						<div class="row" style="background-color:#DCDCDC;">
+  							<div class="col-sm-6 form-group">
+                  <p><b>Medication: </b><span style="float: right"><input class="form-control" type="text" name="input" ng-model="medication" required ng-trim="false"></span></p>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <p><b>Notes: </b><span style="float: right"><input class="form-control" type="text" name="input" ng-model="notes" required ng-trim="false"></span></p>
+                </div>
+  						</div>
+  						<div class="row" style="background-color:#DCDCDC; padding-bottom: 15px">
+  							<div class="col-sm-12">
+                  <button class="btn btn-primary" ng-click="verify(room, allergies, medication, notes, $index)" style="float: right" ng-disabled="newPatients.$invalid">Submit</button>
+  							</div>
+  						</div>
+            </form>
 					</div>
 				</td>
 			</tr>

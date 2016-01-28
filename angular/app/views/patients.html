@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat-start="x in people track by $index" ng-click="info(x)" data-toggle="collapse" data-target="#accordion{{$index}}" class="clickable">
+			<tr ng-repeat-start="x in people track by $index" ng-click="info(x, $index)" data-toggle="collapse" data-target="#accordion{{$index}}" class="clickable">
 				<td>{{ x[1] }}</td>
 				<td>{{ x[2] }}</td>
 				<td>{{ x[3] }}</td>
@@ -21,27 +21,106 @@
 				<td>{{ x[6] }}</td>
 			</tr>
 			<tr ng-repeat-end="">
-				<td colspan="12">
+				<td colspan="12" style="padding: 0; border-top: none">
 					<div id="accordion{{$index}}" class="collapse accordion-body">
-						<div class="row" style="background-color:#DCDCDC;">
-							<div class="col-md-4">
-								<p><b>Phone Number: </b>{{ phone }}</p>
-							</div>
-							<div class-"col-md-4">
-								<p><b>Emergency Name: </b>{{ ename }}</p>
-							</div>
-							<div class="col-md-4">
-								<p><b>Gender: </b>{{ gender }}</p>
-							</div>
-						</div>
-						<div class="row" style="background-color:#DCDCDC;">
-							<div class="col-md-4">
-								<p><b>Address: </b>{{ address }}</p>
-							</div>
-							<div class="col-md-4">
-								<p><b>Emergency Phone Number: </b>{{ enumber }}</p>
-							</div>
-						</div>
+            <div class="container-fluid">
+  						<div class="row" style="background-color:#DCDCDC; padding-top: 15px">
+  							<div class="col-sm-6">
+  								<p><b>Phone Number: </b>{{ people[$index][7].phone }}</p>
+  							</div>
+  							<div class="col-sm-6">
+  								<p><b>Emergency Name: </b>{{ people[$index][7].enumber }}</p>
+  							</div>
+              </div>
+              <div class="row" style="background-color:#DCDCDC;">
+  							<div class="col-sm-6">
+  								<p><b>Gender: </b>{{ people[$index][7].gender }}</p>
+  							</div>
+                <div class="col-sm-6">
+                  <p><b>Emergency Phone Number: </b>{{ people[$index][7].ename }}</p>
+                </div>
+  						</div>
+  						<div class="row" style="background-color:#DCDCDC; padding-bottom: 15px">
+  							<div class="col-sm-6">
+  								<p><b>Address: </b>{{ people[$index][7].address }}</p>
+  							</div>
+                <div class="col-sm-6">
+                  <button type="button" class="btn btn-primary btn-sm"data-toggle="modal" data-target="#medicine">More</button>
+                  <div class="modal fade" id="medicine" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">New Notification</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form name="patientForm[$index]">
+
+                          <h5>Message</h5>
+                          <textarea type="text" ng-model="dateform[$index].message" class="form-control" placeholder="Enter message" style="max-width: 100%" required></textarea>
+                          <br>
+                          <ng-datepicker ng-model="dateform[$index].date" locale="en" required>
+                          </ng-datepicker>
+                          <br>
+                          <div>
+                            <select ng-model="dateform[$index].hour" class="form-control col-sm-3" required>
+                              <option>01</option>
+                              <option>02</option>
+                              <option>03</option>
+                              <option>04</option>
+                              <option>05</option>
+                              <option>06</option>
+                              <option>07</option>
+                              <option>08</option>
+                              <option>09</option>
+                              <option>10</option>
+                              <option>11</option>
+                              <option>12</option>
+                              <option>13</option>
+                              <option>14</option>
+                              <option>15</option>
+                              <option>16</option>
+                              <option>17</option>
+                              <option>18</option>
+                              <option>19</option>
+                              <option>20</option>
+                              <option>21</option>
+                              <option>22</option>
+                              <option>23</option>
+                              <option>00</option>
+                            </select>
+                            <select ng-model="dateform[$index].minute" class="form-control col-sm-3" required>
+                              <option>00</option>
+                              <option>15</option>
+                              <option>30</option>
+                              <option>45</option>
+                            </select>
+                            <select ng-model="dateform[$index].ampm" class="form-control col-sm-3" required>
+                              <option>AM</option>
+                              <option>PM</option>
+                            </select>
+                          </div>
+                          <div>
+                            <select ng-model="dateform[$index].frequency" class="form-control" required>
+                              <option>Once</option>
+                              <option>Daily</option>
+                              <option>Weekly</option>
+                              <option>Monthly</option>
+                              <option>Yearly</option>
+                            </select>
+                          </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" ng-disabled="patientForm[$index].$invalid" ng-click="submit(dateform[$index], $index, people[$index])" class="btn btn-primary">Submit</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  						</div>
+            </div>
 					</div>
 				</td>
 			</tr>

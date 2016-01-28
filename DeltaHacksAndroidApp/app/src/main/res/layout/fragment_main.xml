@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.roberto.deltahacksandroidapp.MainActivityFragment"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/home"/>
+    <TextView
+        android:id="@+id/LoginFragmentTitle"
+        android:layout_marginTop="@dimen/Login_title_margin_top"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/MainMoto"
+        android:textSize="20dp"
+        android:paddingLeft="90dp"/>
+
+    <TextView
+        android:id="@+id/LoginFragmentUsernameTitle"
+        android:layout_marginTop="@dimen/Below_login_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/LoginFragmentTitle"
+        android:text="@string/LoginFragmentNameTitle" />
+
+    <EditText
+        android:id="@+id/LoginFragmentNameEnter"
+        android:layout_marginLeft="@dimen/Side_field_margins"
+        android:layout_marginRight="@dimen/Side_field_margins"
+        android:layout_marginEnd="@dimen/Side_field_margins"
+        android:layout_marginStart="@dimen/Side_field_margins"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/LoginFragmentUsernameTitle"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/LoginFragmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/LoginFragmentNameEnter"
+            android:text="@string/LoginFragmentButton"
+            android:layout_marginLeft="60dp"
+            />
+
+        <Button
+            android:id="@+id/SignUpFragmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/LoginFragmentButton"
+            android:text="@string/SignUpFragmentButton"
+            android:layout_marginLeft="30dp"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>
