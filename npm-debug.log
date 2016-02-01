@@ -1,21 +1,39 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install' ]
-2 info using npm@2.14.7
-3 info using node@v4.2.2
-4 verbose readDependencies loading dependencies from /Users/pedrooliveira/Desktop/DeltaHacksII/DeltaHacks/package.json
-5 error install Couldn't read dependencies
-6 verbose stack Error: ENOENT: no such file or directory, open '/Users/pedrooliveira/Desktop/DeltaHacksII/DeltaHacks/package.json'
-6 verbose stack     at Error (native)
-7 verbose cwd /Users/pedrooliveira/Desktop/DeltaHacksII/DeltaHacks
-8 error Darwin 15.0.0
-9 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install"
-10 error node v4.2.2
-11 error npm  v2.14.7
-12 error path /Users/pedrooliveira/Desktop/DeltaHacksII/DeltaHacks/package.json
-13 error code ENOPACKAGEJSON
-14 error errno -2
-15 error syscall open
-16 error package.json ENOENT: no such file or directory, open '/Users/pedrooliveira/Desktop/DeltaHacksII/DeltaHacks/package.json'
-16 error package.json This is most likely not a problem with npm itself.
-16 error package.json npm can't find a package.json file in your current directory.
-17 verbose exit [ -2, true ]
+1 verbose cli [ 'node', '/usr/bin/npm', 'install', '-g' ]
+2 info using npm@3.5.3
+3 info using node@v0.10.41
+4 verbose node symlink /usr/bin/node
+5 silly loadCurrentTree Starting
+6 silly install loadCurrentTree
+7 silly install readGlobalPackageData
+8 silly fetchPackageMetaData .
+9 silly fetchOtherPackageData .
+10 silly cache add args [ '.', null ]
+11 verbose cache add spec .
+12 silly cache add parsed spec { raw: '.',
+12 silly cache add   scope: null,
+12 silly cache add   name: null,
+12 silly cache add   rawSpec: '.',
+12 silly cache add   spec: '/home/su/Desktop/delta/DeltaHacks',
+12 silly cache add   type: 'local' }
+13 error addLocal Could not install /home/su/Desktop/delta/DeltaHacks
+14 silly fetchPackageMetaData Error: EISDIR, read
+14 silly fetchPackageMetaData  error for . { [Error: EISDIR, read] errno: 28, code: 'EISDIR' }
+15 silly rollbackFailedOptional Starting
+16 silly rollbackFailedOptional Finishing
+17 silly runTopLevelLifecycles Starting
+18 silly runTopLevelLifecycles Finishing
+19 silly install printInstalled
+20 verbose stack Error: EISDIR, read
+21 verbose cwd /home/su/Desktop/delta/DeltaHacks
+22 error Linux 3.10.18
+23 error argv "node" "/usr/bin/npm" "install" "-g"
+24 error node v0.10.41
+25 error npm  v3.5.3
+26 error code EISDIR
+27 error errno 28
+28 error eisdir EISDIR, read
+29 error eisdir This is most likely not a problem with npm itself
+29 error eisdir and is related to npm not being able to find a package.json in
+29 error eisdir a package you are trying to install.
+30 verbose exit [ 28, true ]
